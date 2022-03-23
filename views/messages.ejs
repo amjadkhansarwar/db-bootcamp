@@ -9,19 +9,24 @@
 <body>
     <h1>All messages</h1>
     <article>
-        <%  
-            for(let message of messages){%>
-            <label for=""> <%= message.department_id%> </label>
+        <%  for(let message of messages){%>
+            <label for=""> <%= message.message_id %> </label>
             <p><%= message.title%></p>
             <p><%= message.content%></p>
             <p><%= message.email%></p>
         <%}%>
     </article>
     <div>
-         <label for="">
-             <button name="previous"> < </button><%= totalmessage.COUNT%>
-             <button name="next">></button>
-         </label>
+        <form action="messages" method="get">
+             <button name="limit" value="3"> previous </button>
+             <%  let page = 1 
+             for(var i=1; i <= count; i++) {%>
+                    <a href="/messages?limit=4&page=<%= page%>" name="limit" value="4"> <%= i%> </a>
+                    <% page = page+ 4
+            }%>
+             <button name="limit" value="5">Next</button>
+         
+        </form>
     </div>
 </body>
 </html>

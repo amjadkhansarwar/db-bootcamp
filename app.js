@@ -41,27 +41,37 @@ app.get('/thanks', (req, res)=>{
     res.render('thanks')
 })
 
-app.get('/messages', async(req, res)=>{
+app.get('/mess', async(req, res)=>{
     try{
-        let totalmessage = await getallMessage()
-        console.log(Object.values(totalmessage));
         await db.open('./db/message.db')
         const messages = await db.all('SELECT * FROM messages');
         await db.close()
-        res.render('messages', {messages,totalmessage})
+        res.render('messages', {messages})
         }
         catch(err){
             return err
         }
 })
-app.get('/messages', (req,res) => {
-    req.query // {kalle: 'grillkorv'}
-    res.send('')
- })
-async function getallMessage(){
+app.get('/messages', async (req,res) => {
+    let limit =req.query.limit 
+    let page = req.query.page  
+    if(!page){
+        page = 1
+    }
+    if(!limit){
+        limit= 3
+    }
+    let count = await totalPage()
     await db.open('./db/message.db')
-    const messages = await db.all('SELECT seq FROM sqlite_sequence WHERE name = messages');
+    const messages = await db.all(`SELECT * FROM messages  limit ${limit} OFFSET ${page}`);
     await db.close()
-    return messages
+    res.render('messages', {messages, count})
+ })
+async function totalPage(){
+    await db.open('./db/message.db')
+    const messages = await db.get('SELECT COUNT(*) AS message_id FROM messages');
+    await db.close()
+    let count = Math.ceil(messages.message_id / 4)
+    return count
 }
 app.listen(8000)
