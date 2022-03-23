@@ -1,0 +1,5 @@
+const express = require('express')
+const { PromisedDatabase } = require('promised-sqlite3')
+const db = new PromisedDatabase()
+const app =  express()
+app.listen(8000)
