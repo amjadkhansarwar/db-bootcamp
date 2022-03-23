@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "setup": "node db/setup.js",
+    "seed": "node db/seed.js"
   },
   "dependencies": {
     "ejs": "^3.1.6",

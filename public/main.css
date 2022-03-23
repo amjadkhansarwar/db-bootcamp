@@ -1,0 +1,12 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: .334rem;
+}

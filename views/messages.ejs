@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>All messages</h1>
+    <article>
+        <%  
+            for(let message of messages){%>
+            <label for=""> <%= message.department_id%> </label>
+            <p><%= message.title%></p>
+            <p><%= message.content%></p>
+            <p><%= message.email%></p>
+        <%}%>
+    </article>
+    <div>
+         <label for="">
+             <button name="previous"> < </button><%= totalmessage.COUNT%>
+             <button name="next">></button>
+         </label>
+    </div>
+</body>
+</html>
