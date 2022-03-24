@@ -53,15 +53,34 @@ app.get('/mess', async(req, res)=>{
         }
 })
 app.get('/messages', async (req,res) => {
-    let limit =req.query.limit 
-    let page = req.query.page  
-    if(!page){
-        page = 1
-    }
-    if(!limit){
-        limit= 3
-    }
+   
+    let page = req.query.page 
+    let limit = 3 
+    let currentPage = 1
     let count = await totalPage()
+    if(page){
+        page = page
+        currentPage = page
+    }
+    if(page == "next"){
+        if(currentPage < count){
+        page = currentPage + 1
+        currentPage = page
+        }else{
+            page = count
+        }
+    }
+    if(page == 'previous')
+    {
+        page = currentPage -1
+        currentPage = page
+    } else{
+        page = 1
+        currentPage = page
+    }
+    currentPage = page
+    //page = pageCount(page, count)
+    console.log(page)
     await db.open('./db/message.db')
     const messages = await db.all(`SELECT * FROM messages  limit ${limit} OFFSET ${page}`);
     await db.close()
@@ -73,5 +92,33 @@ async function totalPage(){
     await db.close()
     let count = Math.ceil(messages.message_id / 4)
     return count
+} 
+function pageCount(page, count){
+    let totalPage = count
+    let currentPage = page
+    switch(currentPage){
+        case '':
+            currentPage = 1
+        break
+        case 'next':
+            if(page < totalPage){
+                currentPage = currentPage + 1
+            }else{
+                currentPage = currentPage
+            }
+        
+        break
+        case 'previous':
+            if(page > 1){
+                currentPage = currentPage -1
+            }else{
+                currentPage = 1
+            }
+        break
+        default:
+            currentPage = currentPage
+            break
+    }
+   
 }
 app.listen(8000)

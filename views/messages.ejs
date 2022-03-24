@@ -18,13 +18,13 @@
     </article>
     <div>
         <form action="messages" method="get">
-             <button name="limit" value="3"> previous </button>
+             <button name="page" value="previous"> Previous </button>
              <%  let page = 1 
              for(var i=1; i <= count; i++) {%>
-                    <a href="/messages?limit=4&page=<%= page%>" name="limit" value="4"> <%= i%> </a>
+                <button name="page" value="<%= i%>"><%= i%></button>
                     <% page = page+ 4
             }%>
-             <button name="limit" value="5">Next</button>
+             <button name="page" value="next">Next</button>
          
         </form>
     </div>
