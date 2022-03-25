@@ -18,13 +18,17 @@
     </article>
     <div>
         <form action="messages" method="get">
-             <button name="page" value="previous"> Previous </button>
-             <%  let page = 1 
-             for(var i=1; i <= count; i++) {%>
-                <button name="page" value="<%= i%>"><%= i%></button>
-                    <% page = page+ 4
+            <%  let page = 0 %>
+             <button name="page" value="<%= page%>"> Previous </button>
+             <%      
+             for(var i=1; i <= count; i++) {
+            
+                %>
+                <button name="ofset" value="<%= page %>"><%= i%></button>
+                <%  
+                page  = page + 4
             }%>
-             <button name="page" value="next">Next</button>
+             <button name="page" value="<%= page - 4%>">Next</button>
          
         </form>
     </div>
